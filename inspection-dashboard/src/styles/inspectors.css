@@ -1,0 +1,102 @@
+.inspectors-container {
+  padding: 20px;
+  background-color: #f4f7fe;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-icon, .btn-primary {
+  padding: 8px 15px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.btn-primary {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+}
+
+.table-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.employees-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.employees-table th {
+  text-align: left;
+  color: #6b7280;
+  font-weight: 500;
+  padding: 15px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.employees-table td {
+  padding: 15px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #1f2937;
+}
+
+.name-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cell-main {
+  font-weight: 500;
+}
+
+.cell-sub {
+  font-size: 12px;
+}
+
+.cell-sub.online {
+  color: #10b981;
+}
+
+.cell-sub.offline {
+  color: #6b7280;
+}
+
+.loading-text {
+  text-align: center;
+  padding: 20px;
+  color: #6b7280;
+}

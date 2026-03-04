@@ -1,0 +1,236 @@
+/* ========== LAYOUT FIXES (Flexbox Structure) ========== */
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Page scroll na kare, sirf wrapper scroll kare */
+}
+
+/* ========== QUOTATION MAIN WRAPPER ========== */
+.quotation-wrapper {
+  flex: 1; /* Bachi hui height le le */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Card ko top par set kare */
+  padding: 30px 20px;
+  
+  /* Background gradient */
+  background: radial-gradient(circle at 20% 20%, #ffcc80 0%, #ff9800 100%);
+  
+  overflow-y: auto; /* Card lamba ho to scroll kare */
+  position: relative;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* Decorative Background Spheres */
+.quotation-wrapper::before,
+.quotation-wrapper::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 0;
+}
+.quotation-wrapper::before { width: 400px; height: 400px; top: -100px; left: -100px; }
+.quotation-wrapper::after { width: 250px; height: 250px; bottom: 50px; right: -50px; }
+
+/* ========== MAIN WHITE CARD ========== */
+.quotation-card {
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  position: relative;
+  margin-top: 10px; /* Thoda sa gap header se */
+}
+
+/* ========== STEPPER / PROGRESS TRACKER ========== */
+.stepper-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.step {
+  text-align: center;
+  position: relative;
+  flex: 1;
+}
+
+.step-num {
+  width: 36px;
+  height: 36px;
+  background: #f1f5f9;
+  color: #94a3b8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.step.active .step-num {
+  background: #ff9800;
+  color: white;
+  box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
+}
+
+.step p {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.step.active p {
+  color: #1e293b;
+}
+
+.step-line {
+  flex: 0.5;
+  height: 2px;
+  background: #e2e8f0;
+  margin-top: -25px;
+}
+
+/* ========== FORM GRID LAYOUT ========== */
+.section-title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.section-title-wrapper h3 {
+  font-size: 18px;
+  color: #1e293b;
+  margin: 0;
+}
+
+.photo-upload {
+  color: #ff9800;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.custom-group {
+  margin-bottom: 15px;
+}
+
+.custom-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #475569;
+  font-size: 14px;
+}
+
+/* ========== INPUT & TEXTAREA STYLING ========== */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field-icon {
+  position: absolute;
+  left: 15px;
+  color: #94a3b8;
+  font-size: 16px;
+}
+
+.input-wrapper input,
+.input-wrapper textarea {
+  width: 100%;
+  padding: 12px 15px 12px 40px; /* Left padding for icon */
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  font-size: 14px;
+  background: #f8fafc;
+  transition: 0.3s;
+}
+
+.input-wrapper textarea {
+  padding-left: 15px;
+  resize: vertical;
+}
+
+.input-wrapper input:focus,
+.input-wrapper textarea:focus {
+  outline: none;
+  border-color: #ff9800;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+/* ========== BUTTON ========== */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.btn-save {
+  background: #ff9800;
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
+}
+
+.btn-save:hover {
+  background: #e68a00;
+  transform: translateY(-2px);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .input-grid {
+    grid-template-columns: 1fr;
+  }
+  .full-width {
+    grid-column: span 1;
+  }
+  .step-line {
+    display: none;
+  }
+  .quotation-card {
+    padding: 20px;
+  }
+  /* Decorative spheres smaller on mobile */
+  .quotation-wrapper::before { width: 200px; height: 200px; }
+  .quotation-wrapper::after { width: 150px; height: 150px; }
+}

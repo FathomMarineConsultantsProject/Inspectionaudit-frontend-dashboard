@@ -1,0 +1,330 @@
+/* ========== GLOBAL ========== */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f3f4f6;
+  color: #1e293b;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar {
+  width: 230px;
+  background: #1e293b;
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.sidebar h2 {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.sidebar nav a,
+.sidebar .nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  margin: 6px 0;
+  color: #cbd5f5;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.sidebar nav a.active,
+.sidebar nav a:hover {
+  background: #2563eb;
+  color: white;
+}
+
+/* ========== MAIN CONTENT ========== */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========== HEADER ========== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 30px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.header-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icon-box {
+  position: relative;
+  font-size: 18px;
+  color: #475569;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.icon-box:hover {
+  color: #2563eb;
+  transform: scale(1.1);
+}
+
+/* Notification Badge */
+.notification .badge {
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background: #ef4444;
+  color: white;
+  font-size: 10px;
+  padding: 3px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+/* ========== PROFILE DROPDOWN ========== */
+.profile {
+  position: relative;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.profile img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 50px; /* Profile info ke thik niche */
+  right: 0;
+  width: 180px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  padding: 10px 0;
+  z-index: 1000; /* Taaki cards ke upar dikhe */
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f5f9;
+}
+
+.dropdown-item.logout {
+  color: #ef4444;
+  border-top: 1px solid #eee;
+}
+/* ========== STATS CARDS ========== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.stat-card {
+  color: white;
+  padding: 22px;
+  border-radius: 14px;
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.stat-icon {
+  font-size: 22px;
+  background: rgba(255,255,255,0.2);
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.stat-text h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.stat-text h2 {
+  margin-top: 5px;
+  font-size: 22px;
+}
+
+/* ========== GRID LAYOUT ========== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* ========== CARDS ========== */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* ========== TABLE ========== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: #64748b;
+  padding-bottom: 8px;
+}
+
+td {
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+/* ========== STATUS BADGES ========== */
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status.completed {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status.progress {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.status.pending {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+    padding: 10px;
+  }
+
+  .sidebar h2 {
+    display: none;
+  }
+
+  .sidebar nav a span {
+    display: none;
+  }
+
+  .header {
+    padding: 15px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  /* Stats ko ek line mein rakhne ke liye */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Charts ko side-by-side aur responsive banane ke liye */
+.charts-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 50-50 space */
+  gap: 20px;
+  padding: 0 20px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.chart-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  min-width: 0; /* Important: Charts ko container ke andar squeeze karne ke liye */
+  overflow: hidden; /* Bahar jane se rokega */
+}
+
+/* Chart resize handle karne ke liye (Canvas fix) */
+.chart-box canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Sidebar ke saath main content ka scroll fix */
+.main {
+  flex: 1;
+  overflow-x: hidden; /* Horizontal scroll remove karega */
+  background-color: #f4f7fe;
+}
+}
