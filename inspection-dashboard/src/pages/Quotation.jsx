@@ -12,7 +12,7 @@ export default function Quotation() {
     serviceType: "",
     portCountry: "",
     inspectionDate: "",
-    notes: ""
+    clientEmail: "",
   });
 
   const handleChange = (e) => {
@@ -23,7 +23,7 @@ export default function Quotation() {
   const sendQuotation = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/api/quotation",
+        "https://inspectionaudit-backend.vercel.app/api/quotation",
         formData
       );
 
@@ -34,7 +34,7 @@ export default function Quotation() {
         serviceType: "",
         portCountry: "",
         inspectionDate: "",
-        notes: ""
+        clientEmail: "",
       });
 
     } catch (error) {
@@ -97,18 +97,19 @@ export default function Quotation() {
               </div>
 
               <div className="custom-group full-width">
-                <label>Notes</label>
-                <textarea
-                  name="notes"
-                  rows="3"
-                  value={formData.notes}
-                  onChange={handleChange}
-                />
+              <label>Email Address</label>
+              <input
+                 type="email"
+                 name="clientEmail"
+                 value={formData.clientEmail}
+                 onChange={handleChange}
+                 required
+               />
               </div>
 
               <div className="action-buttons">
                 <button className="btn-save" onClick={sendQuotation}>
-                  Submit Quotation Request
+                  Send Quotation
                 </button>
               </div>
 

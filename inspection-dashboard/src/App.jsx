@@ -64,16 +64,6 @@ function App() {
           }
         />
 
-        {/* ✅ NEW ROUTE ADDED */}
-        <Route
-          path="/submit-quotation"
-          element={
-            <ProtectedRoute>
-              <SubmitQuotation />
-            </ProtectedRoute>
-          }
-        />
-
         <Route
           path="/inspections"
           element={
