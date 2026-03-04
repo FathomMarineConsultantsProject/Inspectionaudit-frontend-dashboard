@@ -66,7 +66,7 @@ function App() {
 
         {/* ✅ YE ROUTE MUST HAI */}
         <Route
-          path="/submit-quotation/:id"
+          path="/submit-quotation"
           element={<SubmitQuotation />}
         />
 
