@@ -22,7 +22,7 @@ export default function SubmitQuotation() {
     try {
       // ✅ Backend API Call
       await axios.put(
-        `http://localhost:5000/api/quotation/submit/${id}`,
+        `https://inspectionaudit-backend.vercel.app/api/quotation/submit/${id}`,
         quotationData
       );
 
