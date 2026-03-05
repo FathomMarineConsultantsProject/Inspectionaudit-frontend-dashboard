@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-import "../styles/inspectors.css";
-import { FaFilter, FaPlus, FaUserCheck, FaBriefcase, FaCalendarAlt, FaUserTimes } from "react-icons/fa";
+// CSS file ka path sahi karein
+import "../styles/inspectors.css"; 
+// Agar aap icons use karna chahte hain (npm install react-icons)
+import { FaFilter, FaPlus } from "react-icons/fa"; 
 
 export default function Inspectors() {
   const [inspectors, setInspectors] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const [available, setAvailable] = useState(0);
-  const [busy, setBusy] = useState(0);
-  const [leave, setLeave] = useState(0);
-  const [unavailable, setUnavailable] = useState(0);
 
   useEffect(() => {
     const BASE_URL = "https://inspectionaudit-backend.vercel.app";
@@ -17,24 +14,8 @@ export default function Inspectors() {
     fetch(`${BASE_URL}/api/inspectors`)
       .then((res) => res.json())
       .then((data) => {
-        const list = Array.isArray(data) ? data : data.data || [];
-        setInspectors(list);
-
-        // availability calculation
-        let a = 0, b = 0, l = 0, u = 0;
-
-        list.forEach((i) => {
-          if (i.status === "available") a++;
-          else if (i.status === "busy") b++;
-          else if (i.status === "leave") l++;
-          else u++;
-        });
-
-        setAvailable(a);
-        setBusy(b);
-        setLeave(l);
-        setUnavailable(u);
-
+        // API response ke structure ke hisaab se (agar .data mein hai)
+        setInspectors(Array.isArray(data) ? data : data.data || []);
         setLoading(false);
       })
       .catch((error) => {
@@ -45,44 +26,6 @@ export default function Inspectors() {
 
   return (
     <div className="inspectors-container">
-
-      {/* Availability Cards */}
-      <div className="status-cards">
-
-        <div className="status-card">
-          <div className="status-icon available">
-            <FaUserCheck />
-          </div>
-          <h2>{available}</h2>
-          <p>AVAILABLE</p>
-        </div>
-
-        <div className="status-card">
-          <div className="status-icon busy">
-            <FaBriefcase />
-          </div>
-          <h2>{busy}</h2>
-          <p>BUSY</p>
-        </div>
-
-        <div className="status-card">
-          <div className="status-icon leave">
-            <FaCalendarAlt />
-          </div>
-          <h2>{leave}</h2>
-          <p>ON LEAVE</p>
-        </div>
-
-        <div className="status-card">
-          <div className="status-icon unavailable">
-            <FaUserTimes />
-          </div>
-          <h2>{unavailable}</h2>
-          <p>UNAVAILABLE</p>
-        </div>
-
-      </div>
-
       {/* Page Header */}
       <div className="page-header">
         <h2 className="page-title">Employees</h2>
