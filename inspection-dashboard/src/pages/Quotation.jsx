@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
+import { FaShip, FaClipboardList, FaGlobe, FaCalendarAlt, FaCamera } from "react-icons/fa";
 import "../styles/quotation.css";
 
 export default function Quotation() {
@@ -14,21 +15,12 @@ export default function Quotation() {
     clientEmail: "",
   });
 
-  const [loading, setLoading] = useState(false);
-
   const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const sendQuotation = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
+  // ✅ FUNCTION YAHAN HOGA (RETURN KE UPAR)
+  const sendQuotation = async () => {
     try {
       await axios.post(
         "https://inspectionaudit-backend.vercel.app/api/quotation",
@@ -37,7 +29,6 @@ export default function Quotation() {
 
       alert("Quotation request sent successfully!");
 
-      // reset form
       setFormData({
         shipType: "",
         serviceType: "",
@@ -47,27 +38,23 @@ export default function Quotation() {
       });
 
     } catch (error) {
-      console.error("Quotation Error:", error);
-      alert("Failed to send quotation");
+      console.error(error);
+      alert("Error sending quotation");
     }
-
-    setLoading(false);
   };
 
   return (
     <div className="dashboard-layout">
       <Sidebar />
-
       <main className="content-area">
         <Header />
 
         <div className="quotation-wrapper">
           <div className="quotation-card">
 
-            <form onSubmit={sendQuotation} className="form-content">
+            <div className="form-content">
 
               <div className="input-grid">
-
                 <div className="custom-group">
                   <label>Ship Type</label>
                   <input
@@ -75,8 +62,6 @@ export default function Quotation() {
                     name="shipType"
                     value={formData.shipType}
                     onChange={handleChange}
-                    placeholder="Enter Ship Type"
-                    required
                   />
                 </div>
 
@@ -87,8 +72,6 @@ export default function Quotation() {
                     name="serviceType"
                     value={formData.serviceType}
                     onChange={handleChange}
-                    placeholder="Enter Service Type"
-                    required
                   />
                 </div>
 
@@ -99,8 +82,6 @@ export default function Quotation() {
                     name="portCountry"
                     value={formData.portCountry}
                     onChange={handleChange}
-                    placeholder="Enter Port & Country"
-                    required
                   />
                 </div>
 
@@ -111,36 +92,28 @@ export default function Quotation() {
                     name="inspectionDate"
                     value={formData.inspectionDate}
                     onChange={handleChange}
-                    required
                   />
                 </div>
-
               </div>
 
               <div className="custom-group full-width">
-                <label>Email Address</label>
-                <input
-                  type="email"
-                  name="clientEmail"
-                  value={formData.clientEmail}
-                  onChange={handleChange}
-                  placeholder="Enter Client Email"
-                  required
-                />
+              <label>Email Address</label>
+              <input
+                 type="email"
+                 name="clientEmail"
+                 value={formData.clientEmail}
+                 onChange={handleChange}
+                 required
+               />
               </div>
 
               <div className="action-buttons">
-                <button
-                  type="submit"
-                  className="btn-save"
-                  disabled={loading}
-                >
-                  {loading ? "Sending..." : "Send Quotation"}
+                <button className="btn-save" onClick={sendQuotation}>
+                  Send Quotation
                 </button>
               </div>
 
-            </form>
-
+            </div>
           </div>
         </div>
 
