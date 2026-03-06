@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/submit-quotation.css";
 
 export default function SubmitQuotation() {
-  // ✅ URL se quotation ID lena
-  const { id } = useParams();
 
   const [quotationData, setQuotationData] = useState({
     amount: "",
@@ -13,21 +10,24 @@ export default function SubmitQuotation() {
   });
 
   const handleChange = (e) => {
-    setQuotationData({ ...quotationData, [e.target.name]: e.target.value });
+    setQuotationData({
+      ...quotationData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // ✅ Backend API Call
-      await axios.put(
-        `https://inspectionaudit-backend.vercel.app/api/quotation/submit`,
+      await axios.post(
+        "https://inspectionaudit-backend.vercel.app/api/quotation/submit",
         quotationData
       );
 
       alert("Quotation submitted successfully!");
       setQuotationData({ amount: "", description: "" });
+
     } catch (error) {
       console.error(error);
       alert("Error submitting quotation");
@@ -40,7 +40,8 @@ export default function SubmitQuotation() {
         <h2>Submit Quotation</h2>
 
         <form onSubmit={handleSubmit}>
-          {/* Amount Input */}
+
+          {/* Amount */}
           <div className="form-group">
             <label>Quotation Amount ($)</label>
             <input
@@ -53,7 +54,7 @@ export default function SubmitQuotation() {
             />
           </div>
 
-          {/* Description Input */}
+          {/* Description */}
           <div className="form-group">
             <label>Description</label>
             <textarea
@@ -63,13 +64,13 @@ export default function SubmitQuotation() {
               onChange={handleChange}
               rows="5"
               required
-            ></textarea>
+            />
           </div>
 
-          {/* Submit Button */}
           <button type="submit" className="btn-submit">
             Finalize Quotation
           </button>
+
         </form>
       </div>
     </div>

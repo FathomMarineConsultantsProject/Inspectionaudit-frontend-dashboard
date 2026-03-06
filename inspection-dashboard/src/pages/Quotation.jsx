@@ -1,8 +1,8 @@
+```javascript
 import { useState } from "react";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import { FaShip, FaClipboardList, FaGlobe, FaCalendarAlt, FaCamera } from "react-icons/fa";
 import "../styles/quotation.css";
 
 export default function Quotation() {
@@ -16,11 +16,15 @@ export default function Quotation() {
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  // ✅ FUNCTION YAHAN HOGA (RETURN KE UPAR)
-  const sendQuotation = async () => {
+  const sendQuotation = async (e) => {
+    e.preventDefault(); // ✅ prevent page refresh
+
     try {
       await axios.post(
         "https://inspectionaudit-backend.vercel.app/api/quotation",
@@ -29,6 +33,7 @@ export default function Quotation() {
 
       alert("Quotation request sent successfully!");
 
+      // reset form
       setFormData({
         shipType: "",
         serviceType: "",
@@ -46,15 +51,17 @@ export default function Quotation() {
   return (
     <div className="dashboard-layout">
       <Sidebar />
+
       <main className="content-area">
         <Header />
 
         <div className="quotation-wrapper">
           <div className="quotation-card">
 
-            <div className="form-content">
+            <form onSubmit={sendQuotation} className="form-content">
 
               <div className="input-grid">
+
                 <div className="custom-group">
                   <label>Ship Type</label>
                   <input
@@ -62,6 +69,7 @@ export default function Quotation() {
                     name="shipType"
                     value={formData.shipType}
                     onChange={handleChange}
+                    required
                   />
                 </div>
 
@@ -72,6 +80,7 @@ export default function Quotation() {
                     name="serviceType"
                     value={formData.serviceType}
                     onChange={handleChange}
+                    required
                   />
                 </div>
 
@@ -82,6 +91,7 @@ export default function Quotation() {
                     name="portCountry"
                     value={formData.portCountry}
                     onChange={handleChange}
+                    required
                   />
                 </div>
 
@@ -92,28 +102,31 @@ export default function Quotation() {
                     name="inspectionDate"
                     value={formData.inspectionDate}
                     onChange={handleChange}
+                    required
                   />
                 </div>
+
               </div>
 
               <div className="custom-group full-width">
-              <label>Email Address</label>
-              <input
-                 type="email"
-                 name="clientEmail"
-                 value={formData.clientEmail}
-                 onChange={handleChange}
-                 required
-               />
+                <label>Email Address</label>
+                <input
+                  type="email"
+                  name="clientEmail"
+                  value={formData.clientEmail}
+                  onChange={handleChange}
+                  required
+                />
               </div>
 
               <div className="action-buttons">
-                <button className="btn-save" onClick={sendQuotation}>
+                <button type="submit" className="btn-save">
                   Send Quotation
                 </button>
               </div>
 
-            </div>
+            </form>
+
           </div>
         </div>
 
@@ -121,3 +134,4 @@ export default function Quotation() {
     </div>
   );
 }
+```
