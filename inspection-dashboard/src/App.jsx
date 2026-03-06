@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import Inspectors from "./pages/Inspectors";
-import Quotation from "./pages/Quotation";
-import SubmitQuotation from "./pages/SubmitQuotation";
-import Inspections from "./pages/Inspections";
-import Reports from "./pages/Reports";
-import Profile from "./pages/Profile";
-import Settings from "./pages/Settings";
+import Login from "./pages/admin/Login";
+import Dashboard from "./pages/admin/Dashboard";
+import Inspectors from "./pages/admin/Inspectors";
+import Quotation from "./pages/admin/Quotation";
+import SubmitQuotation from "./pages/admin/SubmitQuotation";
+import Inspections from "./pages/admin/Inspections";
+import Reports from "./pages/admin/Reports";
+import Profile from "./pages/admin/Profile";
+import Settings from "./pages/admin/Settings";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -25,7 +25,6 @@ function App() {
     return () => window.removeEventListener("storage", checkAuth);
   }, []);
 
-  // 🔐 Protected Route Wrapper
   const ProtectedRoute = ({ children }) => {
     return isAuthenticated ? children : <Navigate to="/" replace />;
   };
@@ -33,10 +32,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* 🔓 Public Route */}
+
         <Route path="/" element={<Login setAuth={setIsAuthenticated} />} />
 
-        {/* 🔐 Protected Routes */}
         <Route
           path="/dashboard"
           element={
@@ -64,11 +62,8 @@ function App() {
           }
         />
 
-        {/* ✅ YE ROUTE MUST HAI */}
-        <Route
-          path="/submit-quotation"
-          element={<SubmitQuotation />}
-        />
+        {/* Public page for email link */}
+        <Route path="/submit-quotation" element={<SubmitQuotation />} />
 
         <Route
           path="/inspections"
@@ -106,8 +101,8 @@ function App() {
           }
         />
 
-        {/* ❌ Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
+
       </Routes>
     </BrowserRouter>
   );
