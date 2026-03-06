@@ -1,4 +1,3 @@
-```javascript
 import { useState } from "react";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
@@ -15,15 +14,20 @@ export default function Quotation() {
     clientEmail: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
   const sendQuotation = async (e) => {
-    e.preventDefault(); // ✅ prevent page refresh
+    e.preventDefault();
+    setLoading(true);
 
     try {
       await axios.post(
@@ -43,9 +47,11 @@ export default function Quotation() {
       });
 
     } catch (error) {
-      console.error(error);
-      alert("Error sending quotation");
+      console.error("Quotation Error:", error);
+      alert("Failed to send quotation");
     }
+
+    setLoading(false);
   };
 
   return (
@@ -69,6 +75,7 @@ export default function Quotation() {
                     name="shipType"
                     value={formData.shipType}
                     onChange={handleChange}
+                    placeholder="Enter Ship Type"
                     required
                   />
                 </div>
@@ -80,6 +87,7 @@ export default function Quotation() {
                     name="serviceType"
                     value={formData.serviceType}
                     onChange={handleChange}
+                    placeholder="Enter Service Type"
                     required
                   />
                 </div>
@@ -91,6 +99,7 @@ export default function Quotation() {
                     name="portCountry"
                     value={formData.portCountry}
                     onChange={handleChange}
+                    placeholder="Enter Port & Country"
                     required
                   />
                 </div>
@@ -115,13 +124,18 @@ export default function Quotation() {
                   name="clientEmail"
                   value={formData.clientEmail}
                   onChange={handleChange}
+                  placeholder="Enter Client Email"
                   required
                 />
               </div>
 
               <div className="action-buttons">
-                <button type="submit" className="btn-save">
-                  Send Quotation
+                <button
+                  type="submit"
+                  className="btn-save"
+                  disabled={loading}
+                >
+                  {loading ? "Sending..." : "Send Quotation"}
                 </button>
               </div>
 
@@ -134,4 +148,3 @@ export default function Quotation() {
     </div>
   );
 }
-```

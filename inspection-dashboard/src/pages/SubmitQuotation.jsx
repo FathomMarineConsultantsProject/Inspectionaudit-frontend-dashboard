@@ -9,15 +9,20 @@ export default function SubmitQuotation() {
     description: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
+    const { name, value } = e.target;
+
     setQuotationData({
       ...quotationData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       await axios.post(
@@ -26,17 +31,25 @@ export default function SubmitQuotation() {
       );
 
       alert("Quotation submitted successfully!");
-      setQuotationData({ amount: "", description: "" });
+
+      // reset form
+      setQuotationData({
+        amount: "",
+        description: "",
+      });
 
     } catch (error) {
-      console.error(error);
-      alert("Error submitting quotation");
+      console.error("Submit Quotation Error:", error);
+      alert("Failed to submit quotation");
     }
+
+    setLoading(false);
   };
 
   return (
     <div className="submit-quotation-container">
       <div className="submit-quotation-card">
+
         <h2>Submit Quotation</h2>
 
         <form onSubmit={handleSubmit}>
@@ -64,14 +77,19 @@ export default function SubmitQuotation() {
               onChange={handleChange}
               rows="5"
               required
-            />
+            ></textarea>
           </div>
 
-          <button type="submit" className="btn-submit">
-            Finalize Quotation
+          <button
+            type="submit"
+            className="btn-submit"
+            disabled={loading}
+          >
+            {loading ? "Submitting..." : "Finalize Quotation"}
           </button>
 
         </form>
+
       </div>
     </div>
   );
