@@ -63,6 +63,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/submit-quotation"
+          element={
+            <ProtectedRoute>
+              <SubmitQuotation />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/inspections"
