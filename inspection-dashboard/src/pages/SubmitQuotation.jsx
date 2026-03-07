@@ -1,179 +1,96 @@
-const Quotation = require("../models/Quotation");
-const nodemailer = require("nodemailer");
+import { useState } from "react";
+import axios from "axios";
+import "../styles/submit-quotation.css";
 
-/* =========================
-   EMAIL TRANSPORTER CONFIG
-========================= */
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+export default function SubmitQuotation() {
 
-/* =========================
-   CREATE QUOTATION (Client Form)
-========================= */
-exports.createQuotation = async (req, res) => {
-  try {
-    const { shipType, serviceType, portCountry, inspectionDate, clientEmail } = req.body;
+  const [quotationData, setQuotationData] = useState({
+    amount: "",
+    description: "",
+  });
 
-    const quotation = await Quotation.create({
-      shipType,
-      serviceType,
-      portCountry,
-      inspectionDate,
-      clientEmail,
-      status: "Pending",
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setQuotationData({
+      ...quotationData,
+      [name]: value,
     });
+  };
 
-    const submitLink =
-      "https://inspectionaudit-frontend-dashboard.vercel.app/submit-quotation";
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
     try {
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: clientEmail,
-        subject: "🚢 New Inspection Enquiry",
-        html: `
-        <div style="font-family:Arial, sans-serif; padding:20px;">
-          <h2 style="color:#2c5cc5; text-align:center;">🚢 New Inspection Enquiry</h2>
+      await axios.post(
+        "https://inspectionaudit-backend.vercel.app/api/quotation/submit",
+        quotationData
+      );
 
-          <p>Hello Team,</p>
-          <p>Please find the inspection request details below:</p>
+      alert("Quotation submitted successfully!");
 
-          <table width="100%" border="1" cellpadding="10" cellspacing="0" style="border-collapse:collapse;">
-            <tr style="background:#2c5cc5; color:white;">
-              <th align="left">Field</th>
-              <th align="left">Details</th>
-            </tr>
+      // reset form
+      setQuotationData({
+        amount: "",
+        description: "",
+      });
 
-            <tr>
-              <td><strong>Ship Type</strong></td>
-              <td>${shipType || "-"}</td>
-            </tr>
+    } catch (error) {
+      console.error("Submit Quotation Error:", error);
+      alert("Failed to submit quotation");
+    }
 
-            <tr>
-              <td><strong>Service Type</strong></td>
-              <td>${serviceType || "-"}</td>
-            </tr>
+    setLoading(false);
+  };
 
-            <tr>
-              <td><strong>Port & Country</strong></td>
-              <td>${portCountry || "-"}</td>
-            </tr>
+  return (
+    <div className="submit-quotation-container">
+      <div className="submit-quotation-card">
 
-            <tr>
-              <td><strong>Inspection Date</strong></td>
-              <td>${inspectionDate || "-"}</td>
-            </tr>
-          </table>
+        <h2>Submit Quotation</h2>
 
-          <div style="text-align:center; margin-top:30px;">
-            <a href="${submitLink}" 
-            style="background-color:#2c5cc5;color:white;padding:12px 25px;
-            text-decoration:none;border-radius:6px;font-weight:bold;">
-            Submit Quotation
-            </a>
+        <form onSubmit={handleSubmit}>
+
+          {/* Amount */}
+          <div className="form-group">
+            <label>Quotation Amount ($)</label>
+            <input
+              type="number"
+              name="amount"
+              placeholder="Enter amount"
+              value={quotationData.amount}
+              onChange={handleChange}
+              required
+            />
           </div>
 
-          <p style="margin-top:30px;">
-          Regards<br/>
-          <strong>Fathom Marine</strong>
-          </p>
+          {/* Description */}
+          <div className="form-group">
+            <label>Description</label>
+            <textarea
+              name="description"
+              placeholder="Enter quotation description..."
+              value={quotationData.description}
+              onChange={handleChange}
+              rows="5"
+              required
+            ></textarea>
+          </div>
 
-        </div>
-        `,
-      });
-    } catch (emailError) {
-      console.log("Email Error:", emailError);
-    }
+          <button
+            type="submit"
+            className="btn-submit"
+            disabled={loading}
+          >
+            {loading ? "Submitting..." : "Finalize Quotation"}
+          </button>
 
-    res.json({
-      success: true,
-      message: "Quotation Created & Email Sent",
-      data: quotation,
-    });
-  } catch (error) {
-    console.log("Create Quotation Error:", error);
+        </form>
 
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
-  }
-};
-
-/* =========================
-   SUBMIT QUOTATION (Team)
-========================= */
-exports.submitQuotation = async (req, res) => {
-  try {
-    const { clientEmail, amount, description } = req.body;
-
-    if (!clientEmail) {
-      return res.status(400).json({
-        success: false,
-        message: "Client email required",
-      });
-    }
-
-    const quotation = await Quotation.findOneAndUpdate(
-      { clientEmail: clientEmail, status: "Pending" },
-      {
-        amount: amount,
-        description: description,
-        status: "Quoted",
-      },
-      { new: true }
-    );
-
-    if (!quotation) {
-      return res.status(404).json({
-        success: false,
-        message: "Pending quotation not found",
-      });
-    }
-
-    res.json({
-      success: true,
-      message: "Quotation submitted successfully",
-      data: quotation,
-    });
-
-  } catch (error) {
-    console.log("Submit Quotation Error:", error);
-
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
-  }
-};
-
-/* =========================
-   GET ALL QUOTATIONS
-========================= */
-exports.getAllQuotations = async (req, res) => {
-  try {
-
-    const quotations = await Quotation
-      .find()
-      .sort({ createdAt: -1 });
-
-    res.json({
-      success: true,
-      data: quotations,
-    });
-
-  } catch (error) {
-
-    console.log("Get All Quotations Error:", error);
-
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
-  }
-};
+      </div>
+    </div>
+  );
+}
