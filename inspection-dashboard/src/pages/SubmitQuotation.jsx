@@ -5,12 +5,14 @@ import "../styles/submit-quotation.css";
 export default function SubmitQuotation() {
 
   const [quotationData, setQuotationData] = useState({
+    clientEmail: "",
     amount: "",
     description: "",
   });
 
   const [loading, setLoading] = useState(false);
 
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -20,6 +22,7 @@ export default function SubmitQuotation() {
     });
   };
 
+  // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -32,15 +35,15 @@ export default function SubmitQuotation() {
 
       alert("Quotation submitted successfully!");
 
-      // reset form
       setQuotationData({
+        clientEmail: "",
         amount: "",
         description: "",
       });
 
     } catch (error) {
-      console.error("Submit Quotation Error:", error);
-      alert("Failed to submit quotation");
+      console.error("Submit Error:", error);
+      alert("Failed to submit. Make sure the email is correct.");
     }
 
     setLoading(false);
@@ -53,6 +56,19 @@ export default function SubmitQuotation() {
         <h2>Submit Quotation</h2>
 
         <form onSubmit={handleSubmit}>
+
+          {/* Client Email */}
+          <div className="form-group">
+            <label>Client Email</label>
+            <input
+              type="email"
+              name="clientEmail"
+              placeholder="Enter client email"
+              value={quotationData.clientEmail}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
           {/* Amount */}
           <div className="form-group">
