@@ -39,24 +39,18 @@ export default function Sidebar() {
           }>
           <FaFileInvoiceDollar /> Quotation
         </NavLink>
+    
+<NavLink 
+  to="/admine-quotation" // 👈 App.jsx ke path se exact match hona chahiye
+  className={({ isActive }) => 
+    isActive ? "nav-item active" : "nav-item"
+  }
+>
+  <FaFileInvoiceDollar /> AdmineQuotation
+</NavLink>
 
-        <NavLink 
-          to="/inspections"
-          className={({ isActive }) => 
-            isActive ? "nav-item active" : "nav-item"
-          }
-        >
-          <FaClipboard /> <span>Inspections</span>
-        </NavLink>
 
-        <NavLink 
-          to="/reports"
-          className={({ isActive }) => 
-            isActive ? "nav-item active" : "nav-item"
-          }
-        >
-          <FaChartBar /> <span>Reports</span>
-        </NavLink>
+        
 
         <div className="nav-item logout" onClick={handleLogout}>
           <FaSignOutAlt /> <span>Logout</span>

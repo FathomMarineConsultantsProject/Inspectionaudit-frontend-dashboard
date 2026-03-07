@@ -26,49 +26,48 @@ export default function Dashboard() {
   }, []);
 
   const fetchData = async () => {
-  setLoading(true);
-  try {
-    const [inspectorsRes, inspectionsRes, loginsRes] = await Promise.all([
-      fetch(`${BASE_URL}/api/inspectors`),
-      fetch(`${BASE_URL}/api/inspections`),
-      fetch(`${BASE_URL}/api/logins`),
-    ]);
-    // Backend route to fetch data
+    setLoading(true);
+    try {
+      const [inspectorsRes, quotationsRes, loginsRes] = await Promise.all([
+        fetch(`${BASE_URL}/api/inspectors`),
+        fetch(`${BASE_URL}/api/quotation`), // ✅ 'inspections' ki jagah 'quotations' use karein
+        fetch(`${BASE_URL}/api/logins`),
+      ]);
 
-    const inspectorsData = await inspectorsRes.json();
-    const inspectionsData = await inspectionsRes.json();
-    const loginsData = await loginsRes.json();
+      const inspectorsData = await inspectorsRes.json();
+      const quotationsData = await quotationsRes.json();
+      const loginsData = await loginsRes.json();
 
-    // 🔥 FIX: Check karein ki data array hai ya object ke andar data hai
-    const inspectionsArray = Array.isArray(inspectionsData) ? inspectionsData : inspectionsData.data || [];
-    const loginsArray = Array.isArray(loginsData) ? loginsData : loginsData.data || [];
-    const inspectorsArray = Array.isArray(inspectorsData) ? inspectorsData : inspectorsData.data || [];
+      // Standardize data to arrays (Dono formats handle honge: array ya {data: []})
+      const inspectorsArray = Array.isArray(inspectorsData) ? inspectorsData : inspectorsData.data || [];
+      const quotationsArray = Array.isArray(quotationsData) ? quotationsData : quotationsData.data || [];
+      const loginsArray = Array.isArray(loginsData) ? loginsData : loginsData.data || [];
 
-    console.log("Processed Inspections:", inspectionsArray);
+      const today = new Date().toDateString();
 
-    const today = new Date().toDateString();
+      // Filter logins for today
+      const todayLoginsCount = loginsArray.filter(
+        (login) => login.createdAt && new Date(login.createdAt).toDateString() === today
+      ).length;
 
-    // Ab filter function kaam karega kyunki ye Array hai
-    const todayLogins = loginsArray.filter(
-      (login) => new Date(login.createdAt).toDateString() === today
-    );
+      // MongoDB screenshot ke hisaab se 'Pending' status filter karein
+      const pendingCount = quotationsArray.filter(
+        (item) => item.status === "Pending"
+      ).length;
 
-    const pendingInspections = inspectionsArray.filter(
-      (inspection) => inspection.status === "Pending"
-    );
-
-    setStats({
-      inspectors: inspectorsArray.length,
-      inspections: inspectionsArray.length,
-      todayLogins: todayLogins.length,
-      pending: pendingInspections.length,
-    });
-    setLoading(false);
-  } catch (error) {
-    console.error("Dashboard Fetch Error:", error);
-    setLoading(false);
-  }
-};
+      setStats({
+        inspectors: inspectorsArray.length,
+        inspections: quotationsArray.length, // Screenshot mein 47 documents hain, yahan wahi dikhega
+        todayLogins: todayLoginsCount,
+        pending: pendingCount,
+      });
+      
+      setLoading(false);
+    } catch (error) {
+      console.error("Dashboard Fetch Error:", error);
+      setLoading(false);
+    }
+  };
 
   // Loading state handling
   if (loading) return <div style={{padding: '20px'}}>Loading dashboard data...</div>;

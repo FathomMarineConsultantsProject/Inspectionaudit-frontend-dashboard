@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Inspectors from "./pages/Inspectors";
 import Quotation from "./pages/Quotation";
+import AdmineQuotations from "./pages/admin/AdmineQuotations";
 import SubmitQuotation from "./pages/SubmitQuotation";
 import Inspections from "./pages/Inspections";
 import Reports from "./pages/Reports";
@@ -63,6 +64,15 @@ function App() {
             </ProtectedRoute>
           }
         />
+   // App.jsx mein is route ko update karein:
+<Route
+  path="/admine-quotation" 
+  element={
+    <ProtectedRoute>
+      <AdmineQuotations />
+    </ProtectedRoute>
+  }
+/>
         <Route
           path="/submit-quotation"
           element={
