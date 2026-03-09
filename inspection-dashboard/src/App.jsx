@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Inspectors from "./pages/Inspectors";
 import Quotation from "./pages/Quotation";
-import Quotation2 from "./pages/Quotation2"; // Import the second quotation page
+import ClientEnquiryForm from "./pages/ClientEnquiryForm"; // Import the second quotation page
 import AdmineQuotations from "./pages/admin/AdmineQuotations";
 import SubmitQuotation from "./pages/SubmitQuotation";
 import Inspections from "./pages/Inspections";
@@ -69,10 +69,10 @@ function App() {
 
         {/* Second Quotation Page - New Route */}
         <Route
-          path="/quotation2" // Unique path for the second quotation page
+          path="/clientenquiryform" // Unique path for the second quotation page
           element={
             <ProtectedRoute>
-              <Quotation2 />
+              <ClientEnquiryForm />
             </ProtectedRoute>
           }
         />

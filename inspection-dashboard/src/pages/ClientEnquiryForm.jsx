@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../styles/Quotation2.css";
+import "../styles/ClientEnquiryForm.css";
 import shipBg from "../assets/ship.png";
 
 export default function Quotation() {
