@@ -5,10 +5,13 @@
   display: flex; 
   justify-content: space-between; 
   align-items: center; 
-  margin-bottom: 20px; 
+  margin-bottom: 25px; 
 }
 
-.search-wrapper { position: relative; width: 320px; }
+.header-left, .header-right { display: flex; align-items: center; gap: 15px; }
+
+/* Search bar */
+.search-wrapper { position: relative; width: 280px; }
 .search-icon { position: absolute; left: 12px; top: 12px; color: #a3b1cc; }
 .search-input { 
   width: 100%; 
@@ -18,6 +21,35 @@
   outline: none;
 }
 
+/* Filter Dropdown */
+.filter-wrapper {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid #d1d9e6;
+  border-radius: 10px;
+  padding: 0 10px;
+  height: 40px;
+}
+.filter-select { border: none; outline: none; font-size: 14px; background: transparent; cursor: pointer; }
+
+/* Refresh Button */
+.btn-refresh {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1px solid #d1d9e6;
+  padding: 8px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #5e72e4;
+  font-weight: 600;
+}
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* Table */
 .table-container { 
   background: white; 
   border-radius: 15px; 
@@ -25,32 +57,17 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
   overflow-x: auto; 
 }
-
-.table { width: 100%; border-collapse: collapse; min-width: 800px; }
+.table { width: 100%; border-collapse: collapse; }
 .table th { text-align: left; padding: 15px; color: #7b809a; font-size: 13px; border-bottom: 1px solid #f0f2f5; }
-.table td { padding: 15px; font-size: 14px; border-bottom: 1px solid #f0f2f5; vertical-align: middle; }
+.table td { padding: 15px; font-size: 14px; border-bottom: 1px solid #f0f2f5; }
 
-.status-badge { padding: 5px 12px; border-radius: 8px; font-weight: bold; font-size: 12px; }
-.status-badge.quoted { background: #e8fadf; color: #2dce89; }
-.status-badge.pending { background: #fff5e9; color: #fb6340; }
+/* Status Badges */
+.status-badge { padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 11px; text-transform: uppercase; }
+.status-badge.quoted { background: #e8fadf; color: #2dce89; border: 1px solid #c3f2ad; }
+.status-badge.pending { background: #fff5e9; color: #fb6340; border: 1px solid #ffe3c1; }
 
-.btn-quote { 
-  background: #5e72e4; 
-  color: white; 
-  padding: 6px 15px; 
-  border-radius: 6px; 
-  text-decoration: none; 
-  font-size: 12px;
-}
-.truncate-text {
-  max-width: 150px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.amount-text {
-  font-weight: bold;
-  color: #2e7d32; /* Dark Green */
-}
+.amount-text { font-weight: bold; color: #2dce89; }
+.truncate-text { max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.text-muted { color: #adb5bd; font-style: italic; }
 .btn-delete { border: none; background: none; color: #f5365c; cursor: pointer; font-size: 16px; }
+.btn-quote { background: #5e72e4; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 12px; }
