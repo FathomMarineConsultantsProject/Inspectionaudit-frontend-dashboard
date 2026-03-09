@@ -2,15 +2,16 @@ import { useState } from "react";
 import axios from "axios";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import { FaShip, FaClipboardList, FaGlobe, FaCalendarAlt, FaCamera } from "react-icons/fa";
+import { FaShip, FaMapMarkerAlt, FaClipboardList, FaCalendarAlt, FaEnvelope, FaUser } from "react-icons/fa";
 import "../styles/quotation.css";
 
 export default function Quotation() {
-
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    shipType: "",
-    serviceType: "",
-    portCountry: "",
+    clientName: "",
+    vesselType: "",
+    inspectionType: "",
+    location: "",
     inspectionDate: "",
     clientEmail: "",
   });
@@ -19,27 +20,31 @@ export default function Quotation() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // ✅ FUNCTION YAHAN HOGA (RETURN KE UPAR)
   const sendQuotation = async () => {
+    if (!formData.clientEmail || !formData.vesselType) {
+      alert("Required fields missing!");
+      return;
+    }
+
+    setLoading(true);
     try {
-      await axios.post(
-        "https://inspectionaudit-backend.vercel.app/api/quotation",
-        formData
-      );
+      const payload = {
+        shipType: formData.vesselType,
+        serviceType: formData.inspectionType,
+        portCountry: formData.location,
+        inspectionDate: formData.inspectionDate,
+        clientEmail: formData.clientEmail,
+        clientName: formData.clientName,
+      };
 
-      alert("Quotation request sent successfully!");
-
-      setFormData({
-        shipType: "",
-        serviceType: "",
-        portCountry: "",
-        inspectionDate: "",
-        clientEmail: "",
-      });
-
+      await axios.post("https://inspectionaudit-backend.vercel.app/api/quotation", payload);
+      
+      alert("🚀 Enquiry Created Successfully!");
+      setFormData({ clientName: "", vesselType: "", inspectionType: "", location: "", inspectionDate: "", clientEmail: "" });
     } catch (error) {
-      console.error(error);
-      alert("Error sending quotation");
+      alert(error.response?.data?.message || "Failed to connect to server.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,75 +53,42 @@ export default function Quotation() {
       <Sidebar />
       <main className="content-area">
         <Header />
-
         <div className="quotation-wrapper">
           <div className="quotation-card">
-
+            <h2 className="form-title">Create New Inspection Enquiry</h2>
             <div className="form-content">
-
               <div className="input-grid">
                 <div className="custom-group">
-                  <label>Ship Type</label>
-                  <input
-                    type="text"
-                    name="shipType"
-                    value={formData.shipType}
-                    onChange={handleChange}
-                  />
+                  <label><FaUser /> Client Name</label>
+                  <input type="text" name="clientName" value={formData.clientName} onChange={handleChange} placeholder="Nipun Chatrath" />
                 </div>
-
                 <div className="custom-group">
-                  <label>Service Type</label>
-                  <input
-                    type="text"
-                    name="serviceType"
-                    value={formData.serviceType}
-                    onChange={handleChange}
-                  />
+                  <label><FaShip /> Vessel Type</label>
+                  <input type="text" name="vesselType" value={formData.vesselType} onChange={handleChange} placeholder="Bulk Carrier" />
                 </div>
-
                 <div className="custom-group">
-                  <label>Port & Country</label>
-                  <input
-                    type="text"
-                    name="portCountry"
-                    value={formData.portCountry}
-                    onChange={handleChange}
-                  />
+                  <label><FaClipboardList /> Inspection Type</label>
+                  <input type="text" name="inspectionType" value={formData.inspectionType} onChange={handleChange} placeholder="Pre-purchase" />
                 </div>
-
                 <div className="custom-group">
-                  <label>Inspection Date</label>
-                  <input
-                    type="date"
-                    name="inspectionDate"
-                    value={formData.inspectionDate}
-                    onChange={handleChange}
-                  />
+                  <label><FaMapMarkerAlt /> Location</label>
+                  <input type="text" name="location" value={formData.location} onChange={handleChange} placeholder="Baltimore, USA" />
+                </div>
+                <div className="custom-group">
+                  <label><FaCalendarAlt /> Date</label>
+                  <input type="date" name="inspectionDate" value={formData.inspectionDate} onChange={handleChange} />
+                </div>
+                <div className="custom-group">
+                  <label><FaEnvelope /> Client Email</label>
+                  <input type="email" name="clientEmail" value={formData.clientEmail} onChange={handleChange} placeholder="client@mail.com" />
                 </div>
               </div>
-
-              <div className="custom-group full-width">
-              <label>Email Address</label>
-              <input
-                 type="email"
-                 name="clientEmail"
-                 value={formData.clientEmail}
-                 onChange={handleChange}
-                 required
-               />
-              </div>
-
-              <div className="action-buttons">
-                <button className="btn-save" onClick={sendQuotation}>
-                  Send Quotation
-                </button>
-              </div>
-
+              <button className="btn-save" onClick={sendQuotation} disabled={loading}>
+                {loading ? "Processing..." : "Create Enquiry"}
+              </button>
             </div>
           </div>
         </div>
-
       </main>
     </div>
   );

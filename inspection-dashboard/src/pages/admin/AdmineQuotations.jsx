@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import { FaSearch, FaTrash } from "react-icons/fa";
-// AdmineQuotations.jsx mein line 7 update karein
 import "../../styles/AdmineQuotations.css";
 
 export default function AdmineQuotations() {
@@ -11,7 +10,6 @@ export default function AdmineQuotations() {
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // ✅ Sahi Backend Path as per index.js
   const API_URL = "https://inspectionaudit-backend.vercel.app/api/quotation";
 
   const fetchQuotations = async () => {
@@ -82,18 +80,34 @@ export default function AdmineQuotations() {
                 <th>Ship Type</th>
                 <th>Client Email</th>
                 <th>Port/Country</th>
+                {/* ✅ Amount aur Description headers add kiye */}
+                <th>Amount ($)</th>
+                <th>Description</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="5" className="text-center">Loading...</td></tr>
+                <tr><td colSpan="7" className="text-center">Loading...</td></tr>
               ) : filteredData.map((q) => (
                 <tr key={q._id}>
                   <td>{q.shipType || "N/A"}</td>
                   <td>{q.clientEmail || "N/A"}</td>
                   <td>{q.portCountry || "N/A"}</td>
+                  
+                  {/* ✅ Amount column logic */}
+                  <td className="amount-text">
+                    {q.amount ? `$${q.amount}` : "No Bid"}
+                  </td>
+                  
+                  {/* ✅ Description column logic */}
+                  <td className="desc-cell">
+                    <div className="truncate-text" title={q.description}>
+                      {q.description || "No Remarks"}
+                    </div>
+                  </td>
+
                   <td>
                     <span className={`status-badge ${q.status?.toLowerCase()}`}>
                       {q.status || "Pending"}

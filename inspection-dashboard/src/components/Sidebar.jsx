@@ -40,6 +40,15 @@ export default function Sidebar() {
           <FaFileInvoiceDollar /> Quotation
         </NavLink>
     
+         <NavLink 
+       to="/quotation2" // New route for the second quotation page
+     className={({ isActive }) => 
+      isActive ? "nav-item active" : "nav-item"
+           }
+       >
+      <FaFileInvoiceDollar /> Quotation 2
+        </NavLink>
+
 <NavLink 
   to="/admine-quotation" // 👈 App.jsx ke path se exact match hona chahiye
   className={({ isActive }) => 

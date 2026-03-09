@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Inspectors from "./pages/Inspectors";
 import Quotation from "./pages/Quotation";
+import Quotation2 from "./pages/Quotation2"; // Import the second quotation page
 import AdmineQuotations from "./pages/admin/AdmineQuotations";
 import SubmitQuotation from "./pages/SubmitQuotation";
 import Inspections from "./pages/Inspections";
@@ -56,6 +57,7 @@ function App() {
           }
         />
 
+        {/* First Quotation Page */}
         <Route
           path="/quotation"
           element={
@@ -64,19 +66,30 @@ function App() {
             </ProtectedRoute>
           }
         />
-   // App.jsx mein is route ko update karein:
-<Route
-  path="/admine-quotation" 
-  element={
-    <ProtectedRoute>
-      <AdmineQuotations />
-    </ProtectedRoute>
-  }
-/>
+
+        {/* Second Quotation Page - New Route */}
+        <Route
+          path="/quotation2" // Unique path for the second quotation page
+          element={
+            <ProtectedRoute>
+              <Quotation2 />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admine-quotation"
+          element={
+            <ProtectedRoute>
+              <AdmineQuotations />
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/submit-quotation"
           element={
-              <SubmitQuotation />
+            <SubmitQuotation />
           }
         />
 

@@ -42,5 +42,15 @@
   text-decoration: none; 
   font-size: 12px;
 }
+.truncate-text {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
+.amount-text {
+  font-weight: bold;
+  color: #2e7d32; /* Dark Green */
+}
 .btn-delete { border: none; background: none; color: #f5365c; cursor: pointer; font-size: 16px; }
