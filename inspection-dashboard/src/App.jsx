@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+/* Pages */
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Inspectors from "./pages/Inspectors";
 import Quotation from "./pages/Quotation";
-import ClientEnquiryForm from "./pages/ClientEnquiryForm"; // Import the second quotation page
+import ClientEnquiryForm from "./pages/ClientEnquiryForm";
+import ClientEnquirySubmit from "./pages/ClientEnquirysubmit";
 import AdmineQuotations from "./pages/admin/AdmineQuotations";
 import SubmitQuotation from "./pages/SubmitQuotation";
 import Inspections from "./pages/Inspections";
@@ -14,6 +16,7 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 
 function App() {
+
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("isAuthenticated") === "true"
   );
@@ -25,20 +28,23 @@ function App() {
 
     window.addEventListener("storage", checkAuth);
     return () => window.removeEventListener("storage", checkAuth);
+
   }, []);
 
-  // 🔐 Protected Route Wrapper
+  /* Protected Route Wrapper */
   const ProtectedRoute = ({ children }) => {
     return isAuthenticated ? children : <Navigate to="/" replace />;
   };
 
   return (
     <BrowserRouter>
+
       <Routes>
-        {/* 🔓 Public Route */}
+
+        {/* PUBLIC ROUTE */}
         <Route path="/" element={<Login setAuth={setIsAuthenticated} />} />
 
-        {/* 🔐 Protected Routes */}
+        {/* DASHBOARD */}
         <Route
           path="/dashboard"
           element={
@@ -48,6 +54,7 @@ function App() {
           }
         />
 
+        {/* INSPECTORS */}
         <Route
           path="/inspectors"
           element={
@@ -57,7 +64,7 @@ function App() {
           }
         />
 
-        {/* First Quotation Page */}
+        {/* ADMIN QUOTATION */}
         <Route
           path="/quotation"
           element={
@@ -67,9 +74,9 @@ function App() {
           }
         />
 
-        {/* Second Quotation Page - New Route */}
+        {/* CLIENT ENQUIRY FORM */}
         <Route
-          path="/clientenquiryform" // Unique path for the second quotation page
+          path="/clientenquiryform"
           element={
             <ProtectedRoute>
               <ClientEnquiryForm />
@@ -77,6 +84,7 @@ function App() {
           }
         />
 
+        {/* ADMIN QUOTATIONS LIST */}
         <Route
           path="/admine-quotation"
           element={
@@ -86,13 +94,19 @@ function App() {
           }
         />
 
+        {/* SUBMIT QUOTATION */}
         <Route
           path="/submit-quotation"
-          element={
-            <SubmitQuotation />
-          }
+          element={<SubmitQuotation />}
         />
 
+        {/* CLIENT ENQUIRY SUBMIT (TOKEN LINK) */}
+        <Route
+          path="/client-enquiry/:token"
+          element={<ClientEnquirySubmit />}
+        />
+
+        {/* INSPECTIONS */}
         <Route
           path="/inspections"
           element={
@@ -102,6 +116,7 @@ function App() {
           }
         />
 
+        {/* REPORTS */}
         <Route
           path="/reports"
           element={
@@ -111,6 +126,7 @@ function App() {
           }
         />
 
+        {/* PROFILE */}
         <Route
           path="/profile"
           element={
@@ -120,6 +136,7 @@ function App() {
           }
         />
 
+        {/* SETTINGS */}
         <Route
           path="/settings"
           element={
@@ -129,9 +146,11 @@ function App() {
           }
         />
 
-        {/* ❌ Fallback */}
+        {/* FALLBACK */}
         <Route path="*" element={<Navigate to="/" replace />} />
+
       </Routes>
+
     </BrowserRouter>
   );
 }

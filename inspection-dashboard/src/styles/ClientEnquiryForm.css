@@ -36,3 +36,68 @@
  border-radius:6px;
  cursor:pointer;
 }
+.enquiry-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: #f4f7f9;
+  min-height: calc(100vh - 80px); /* Sidebar/Header space */
+}
+
+.enquiry-card {
+  background: white;
+  padding: 30px;
+  border-radius: 4px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 600px;
+  border-top: 3px solid #00b8d4; /* Teal Accent */
+}
+
+.brand-logo {
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #1a2634;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #7f8c8d;
+  margin-bottom: 8px;
+  display: block;
+  text-transform: uppercase;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dcdde1;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #00b8d4;
+  outline: none;
+}
+
+.submit-btn {
+  background: #1a2634;
+  color: white;
+  border: none;
+  padding: 15px;
+  width: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background: #00b8d4;
+}

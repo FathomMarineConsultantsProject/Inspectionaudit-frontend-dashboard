@@ -58,7 +58,7 @@ export default function ClientEnquiryForm() {
       <div className="enquiry-card">
         {/* Idwal jaisa clean heading */}
         <div className="form-header">
-           <span className="brand-logo">IDWAL</span>
+           <span className="brand-logo">Fathom marine</span>
            <h2>Vessel Inspection Request</h2>
         </div>
 
