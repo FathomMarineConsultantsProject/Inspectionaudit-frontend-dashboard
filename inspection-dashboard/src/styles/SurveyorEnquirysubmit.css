@@ -1,80 +1,99 @@
 .dark-bg{
-  background: linear-gradient(rgba(5,15,30,0.9),rgba(5,15,30,0.95)),
+  background:
+  linear-gradient(rgba(5,15,30,0.88), rgba(5,15,30,0.95)),
   url("https://images.unsplash.com/photo-1503387762-592deb58ef4e");
+
   background-size: cover;
   background-position: center;
-
   height:100vh;
+
   display:flex;
   align-items:center;
   justify-content:center;
+
   font-family: "Segoe UI", sans-serif;
 }
 
+/* card */
 .card{
-  background: rgba(10,20,40,0.85);
-  padding:40px;
+  background: rgba(10,20,40,0.80);
+  padding:45px;
   width:420px;
   border-radius:10px;
   text-align:center;
   color:white;
-  box-shadow:0 0 25px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  box-shadow:0 0 30px rgba(0,0,0,0.6);
 }
 
+/* logo */
 .logo{
   font-size:28px;
-  font-weight:bold;
+  font-weight:700;
   letter-spacing:2px;
-  margin-bottom:15px;
+  margin-bottom:20px;
 }
 
 .logo span{
   color:#00d4ff;
 }
 
+/* title */
 .title{
-  font-size:16px;
-  letter-spacing:3px;
-  margin-bottom:20px;
+  font-size:14px;
+  letter-spacing:4px;
+  margin-bottom:25px;
   border-bottom:1px solid rgba(255,255,255,0.2);
-  padding-bottom:10px;
+  padding-bottom:12px;
 }
 
+/* inspection details */
 .details{
   text-align:left;
-  margin-bottom:20px;
+  margin-bottom:25px;
 }
 
 .details p{
-  margin:6px 0;
+  margin:8px 0;
   font-size:14px;
+  display:flex;
+  justify-content:space-between;
 }
 
+.details strong{
+  color:#cfd6e6;
+}
+
+/* fee box */
 .fee-box{
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.15);
-  padding:12px;
-  margin-bottom:15px;
+  padding:14px;
+  margin-bottom:18px;
   border-radius:6px;
+  font-size:14px;
 }
 
+/* input */
 .input{
   width:100%;
   padding:10px;
   border-radius:4px;
   border:none;
-  margin-bottom:15px;
+  margin-bottom:18px;
   font-size:14px;
 }
 
+/* confirm button */
 .confirm{
   width:100%;
-  padding:10px;
+  padding:11px;
   background:#00c4cc;
   border:none;
   border-radius:4px;
   color:white;
-  font-weight:bold;
+  font-weight:600;
+  letter-spacing:1px;
   cursor:pointer;
 }
 
@@ -82,12 +101,14 @@
   background:#00a7ad;
 }
 
+/* OR text */
 .or{
-  margin:10px 0;
+  margin:14px 0;
   font-size:12px;
   opacity:0.7;
 }
 
+/* decline button */
 .decline{
   width:100%;
   padding:10px;

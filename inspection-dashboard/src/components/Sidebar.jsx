@@ -41,12 +41,12 @@ export default function Sidebar() {
         </NavLink>
     
          <NavLink 
-       to="/clientenquiryform" // New route for the second quotation page
+       to="/SurveyorEnquiry" // New route for the second quotation page
      className={({ isActive }) => 
       isActive ? "nav-item active" : "nav-item"
            }
        >
-      <FaFileInvoiceDollar /> ClientEnquiryForm
+      <FaFileInvoiceDollar /> SurveyorEnquiry
         </NavLink>
 
 <NavLink 

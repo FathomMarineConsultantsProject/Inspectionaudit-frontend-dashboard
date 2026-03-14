@@ -6,8 +6,8 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Inspectors from "./pages/Inspectors";
 import Quotation from "./pages/Quotation";
-import ClientEnquiryForm from "./pages/ClientEnquiryForm";
-import ClientEnquirySubmit from "./pages/ClientEnquirysubmit";
+import ClientEnquiryForm from "./pages/SurveyorEnquiry";
+import ClientEnquirySubmit from "./pages/SurveyorEnquirysubmit";
 import AdmineQuotations from "./pages/admin/AdmineQuotations";
 import SubmitQuotation from "./pages/SubmitQuotation";
 import Inspections from "./pages/Inspections";
@@ -76,7 +76,7 @@ function App() {
 
         {/* CLIENT ENQUIRY FORM */}
         <Route
-          path="/clientenquiryform"
+          path="/SurveyorEnquiry"
           element={
             <ProtectedRoute>
               <ClientEnquiryForm />
@@ -102,7 +102,7 @@ function App() {
 
         {/* CLIENT ENQUIRY SUBMIT (TOKEN LINK) */}
         <Route
-          path="/client-enquiry/:token"
+          path="/surveyor-enquiry/:token"
           element={<ClientEnquirySubmit />}
         />
 

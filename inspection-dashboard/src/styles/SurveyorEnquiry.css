@@ -1,0 +1,98 @@
+/* Background */
+
+.enquiry-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0f172a;
+  padding: 20px;
+}
+
+
+/* Card */
+
+.enquiry-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 520px;
+  padding: 35px 40px;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+
+/* Logo */
+
+.brand-logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #1a2634;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+
+/* Form title */
+
+.enquiry-card h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #1a2634;
+}
+
+
+/* Input group */
+
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #7f8c8d;
+  display: block;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+
+/* Inputs */
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dcdde1;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: #00b8d4;
+  outline: none;
+}
+
+
+/* Button */
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: #1a2634;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.submit-btn:hover {
+  background: #00b8d4;
+}
