@@ -112,13 +112,9 @@ export default function Inspectors() {
         <h2 className="page-title">Employees</h2>
 
         <div className="header-actions">
-          <button className="btn-icon">
-            <FaFilter />
-          </button>
+          
 
-          <button className="btn-primary">
-            <FaPlus /> View Subscription
-          </button>
+         
         </div>
       </div>
 

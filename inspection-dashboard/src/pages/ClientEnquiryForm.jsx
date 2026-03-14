@@ -1,84 +1,148 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import "../styles/ClientEnquiryForm.css";
-import shipBg from "../assets/ship.png";
 
-export default function Quotation() {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    companyName: "",
-    pic: "",
-    email: "",
-    phone: "",
-    inspectionType: "",
+export default function ClientEnquiryForm() {
+  const [form, setForm] = useState({
+    clientName: "",
+    clientEmail: "",
     shipType: "",
+    serviceType: "",
     portCountry: "",
-    dateFrom: "",
-    dateTo: ""
+    inspectionDate: ""
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
   };
 
   const submitForm = async (e) => {
     e.preventDefault();
-    if (!formData.email || !formData.shipType) {
-      alert("Please fill in the required fields (Email and Ship Type)!");
-      return;
-    }
-
     setLoading(true);
-    try {
-      const payload = {
-        clientName: formData.companyName,
-        clientEmail: formData.email,
-        shipType: formData.shipType,
-        serviceType: formData.inspectionType,
-        portCountry: formData.portCountry,
-        // Combining date range for backend compatibility
-        inspectionDate: `${formData.dateFrom} to ${formData.dateTo}`,
-        phone: formData.phone,
-        pic: formData.pic
-      };
 
-      await axios.post("https://inspectionaudit-backend.vercel.app/api/quotation", payload);
-      alert("🚀 Enquiry Created Successfully! Sent to FMC.");
-      navigate("/admin-quotations"); // Move to management view
-    } catch (error) {
-      alert("Failed to create enquiry. Check console.");
+    try {
+      // Backend endpoint jo Image 1 wala email bhejega
+      const res = await axios.post(
+        "https://inspectionaudit-backend.vercel.app/api/enquiry",
+        form
+      );
+
+      console.log("Response:", res.data);
+      alert("✅ Enquiry submitted! Invitation email sent to surveyor.");
+
+      // Form clear karna
+      setForm({
+        clientName: "",
+        clientEmail: "",
+        shipType: "",
+        serviceType: "",
+        portCountry: "",
+        inspectionDate: ""
+      });
+
+    } catch (err) {
+      console.error(err.response?.data || err.message);
+      alert("❌ Failed to submit enquiry");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="hero-container">
-      <img src={shipBg} className="hero-bg" alt="ship" />
-      <div className="glass-card">
-        <h2>Create Inspection Enquiry</h2>
-        <div className="form-grid">
-          <input name="companyName" placeholder="Company Name" onChange={handleChange} />
-          <input name="pic" placeholder="P I C" onChange={handleChange} />
-          <input name="email" type="email" placeholder="Email ID" onChange={handleChange} />
-          <input name="phone" placeholder="Phone Number" onChange={handleChange} />
-          
-          {/* Surveyor Visible Fields (Red in your diagram) */}
-          <input name="inspectionType" placeholder="Inspection Type" className="highlight" onChange={handleChange} />
-          <input name="shipType" placeholder="Ship Type" className="highlight" onChange={handleChange} />
-          <input name="portCountry" placeholder="Port & Country" className="highlight" onChange={handleChange} />
-          
-          <div className="date-range highlight">
-            <input type="date" name="dateFrom" onChange={handleChange} />
-            <span>to</span>
-            <input type="date" name="dateTo" onChange={handleChange} />
-          </div>
+    <div className="enquiry-container">
+      <div className="enquiry-card">
+        {/* Idwal jaisa clean heading */}
+        <div className="form-header">
+           <span className="brand-logo">IDWAL</span>
+           <h2>Vessel Inspection Request</h2>
         </div>
-        <button className="submit-btn" onClick={submitForm} disabled={loading}>
-          {loading ? "Creating..." : "Create Enquiry"}
-        </button>
+
+        <form onSubmit={submitForm}>
+          <div className="input-group">
+            <label>Company / Client Name</label>
+            <input
+              type="text"
+              name="clientName"
+              placeholder="e.g. Sinotech Marine"
+              value={form.clientName}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label>Surveyor / Client Email</label>
+            <input
+              type="email"
+              name="clientEmail"
+              placeholder="surveyor@example.com"
+              value={form.clientEmail}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-row">
+            <div className="input-group">
+              <label>Vessel Type</label>
+              <input
+                type="text"
+                name="shipType"
+                placeholder="e.g. Bulk Carrier"
+                value={form.shipType}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-group">
+              <label>Inspection Type</label>
+              <input
+                type="text"
+                name="serviceType"
+                placeholder="e.g. Pre-purchase"
+                value={form.serviceType}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label>Port / Country</label>
+            <input
+              type="text"
+              name="portCountry"
+              placeholder="e.g. Baltimore, USA"
+              value={form.portCountry}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label>Inspection Date</label>
+            <input
+              type="date"
+              name="inspectionDate"
+              value={form.inspectionDate}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? (
+              <span className="spinner"></span>
+            ) : (
+              "SUBMIT ENQUIRY"
+            )}
+          </button>
+        </form>
       </div>
     </div>
   );
